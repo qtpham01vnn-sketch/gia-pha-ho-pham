@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="vi" data-theme="traditional">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="description" content="Gia Phả Họ Phạm - Cây phả hệ tương tác">
+  <meta name="theme-color" content="#D4AF37">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <link rel="manifest" href="./manifest.json">
+  <link rel="icon" href="./assets/icons/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="./assets/icons/icon-192.png">
+  <title>Gia Phả Họ Phạm</title>
+  
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@300;400;500;600;700&family=Be+Vietnam+Pro:wght@300;400;500;600;700&family=Noto+Serif:wght@400;700&display=swap" rel="stylesheet">
+  
+  <style>
+    /* Loading Screen CSS inline */
+    #loading-screen {
+      position: fixed;
+      top: 0; left: 0; width: 100vw; height: 100vh;
+      background: #f5f5f5;
+      display: flex; justify-content: center; align-items: center;
+      z-index: 9999;
+      transition: opacity 0.5s ease-out;
+    }
+    .loading-content { text-align: center; font-family: 'Be Vietnam Pro', sans-serif; }
+    .loading-icon { font-size: 3rem; margin-bottom: 1rem; animation: pulse 1.5s infinite; }
+    .loading-bar { width: 200px; height: 4px; background: #ddd; border-radius: 2px; margin: 1rem auto; overflow: hidden; }
+    .loading-progress { width: 40%; height: 100%; background: #D4AF37; animation: slide 1.5s infinite ease-in-out; }
+    @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.5; } }
+    @keyframes slide { 0% { transform: translateX(-100%); } 100% { transform: translateX(250%); } }
+  </style>
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="./css/main.css">
+  <link rel="stylesheet" href="./css/theme-traditional.css">
+  <link rel="stylesheet" href="./css/theme-modern.css">
+  <link rel="stylesheet" href="./css/tree.css">
+  <link rel="stylesheet" href="./css/components.css">
+</head>
+<body>
+  <!-- Loading Screen -->
+  <div id="loading-screen">
+    <div class="loading-content">
+      <div class="loading-icon">🏛️</div>
+      <h2>Gia Phả Họ Phạm</h2>
+      <p>Đang tải dữ liệu phả hệ...</p>
+      <div class="loading-bar"><div class="loading-progress"></div></div>
+    </div>
+  </div>
+
+  <!-- App Container -->
+  <div id="app-container">
+    <!-- Header -->
+    <header id="app-header">
+      <div class="header-left">
+        <h1 class="app-title">🏛️ Gia Phả Họ <span class="family-name">Phạm</span></h1>
+        <span class="app-subtitle">Uống nước nhớ nguồn</span>
+      </div>
+      <div class="header-controls">
+        <button id="btn-family-history" class="btn-history-header" title="Xem Nguồn Gốc Dòng Họ & Phả Ký">
+          <span>📖</span> <span class="btn-text">Phả Ký Dòng Họ</span>
+        </button>
+        <div class="lineage-toggle">
+          <button class="lineage-btn active" data-lineage="paternal">Dòng Nội</button>
+          <button class="lineage-btn" data-lineage="maternal">Dòng Ngoại</button>
+        </div>
+        <button id="theme-toggle" class="theme-toggle-btn" title="Đổi giao diện">
+          <span class="theme-icon traditional-icon">🏛️</span>
+          <span class="theme-icon modern-icon" style="display:none;">💎</span>
+        </button>
+      </div>
+    </header>
+
+    <!-- Dashboard Bar -->
+    <section id="dashboard-bar">
+      <div class="kpi-cards">
+        <div class="kpi-card">
+          <span class="kpi-icon">👥</span>
+          <div class="kpi-data">
+            <span class="kpi-value" id="kpi-total">0</span>
+            <span class="kpi-label">Thành viên</span>
+          </div>
+        </div>
+        <div class="kpi-card">
+          <span class="kpi-icon">🌳</span>
+          <div class="kpi-data">
+            <span class="kpi-value" id="kpi-generations">0</span>
+            <span class="kpi-label">Thế hệ</span>
+          </div>
+        </div>
+        <div class="kpi-card">
+          <span class="kpi-icon">👨</span>
+          <div class="kpi-data">
+            <span class="kpi-value" id="kpi-male">0</span>
+            <span class="kpi-label">Đinh (Nam)</span>
+          </div>
+        </div>
+        <div class="kpi-card">
+          <span class="kpi-icon">👩</span>
+          <div class="kpi-data">
+            <span class="kpi-value" id="kpi-female">0</span>
+            <span class="kpi-label">Nữ / Dâu</span>
+          </div>
+        </div>
+        <div class="kpi-card">
+          <span class="kpi-icon">💚</span>
+          <div class="kpi-data">
+            <span class="kpi-value" id="kpi-living">0</span>
+            <span class="kpi-label">Còn sống</span>
+          </div>
+        </div>
+        <div class="kpi-card">
+          <span class="kpi-icon">🪷</span>
+          <div class="kpi-data">
+            <span class="kpi-value" id="kpi-deceased">0</span>
+            <span class="kpi-label">Đã khuất</span>
+          </div>
+        </div>
+      </div>
+      <div class="dashboard-actions">
+        <button id="btn-add-member" class="btn-add-member" title="Thêm Thành Viên Mới">
+          <span>➕</span> <span class="btn-text">Thêm Thành Viên</span>
+        </button>
+        <div class="search-box">
+          <span class="search-icon">🔍</span>
+          <input type="text" id="search-input" placeholder="Tìm theo tên hoặc vai vế..." autocomplete="off">
+          <div id="search-results" class="search-results hidden"></div>
+        </div>
+        <div class="export-buttons">
+          <button class="btn-export" id="btn-export-png" title="Xuất ảnh PNG siêu nét">📷 PNG</button>
+          <button class="btn-export" id="btn-export-svg" title="Xuất file Vector SVG">🖼️ SVG</button>
+          <button class="btn-export" id="btn-export-pdf" title="Xuất tài liệu in ấn PDF">📄 PDF</button>
+        </div>
+        <button id="memorial-toggle" class="btn-memorial" title="Lịch Giỗ & Sự Kiện">
+          <span>🪷</span>
+          <span class="memorial-badge" id="memorial-badge"></span>
+          <span class="btn-text">Lịch Giỗ</span>
+        </button>
+      </div>
+    </section>
+
+    <!-- Tree Canvas -->
+    <main id="tree-container">
+      <svg id="tree-svg"></svg>
+      <div id="zoom-controls">
+        <button class="zoom-btn" id="zoom-in" title="Phóng to">+</button>
+        <button class="zoom-btn" id="zoom-out" title="Thu nhỏ">−</button>
+        <button class="zoom-btn" id="zoom-fit" title="Vừa màn hình">⊡</button>
+      </div>
+    </main>
+
+    <!-- Overlay chung cho Modal & Drawer -->
+    <div id="drawer-overlay" class="drawer-overlay"></div>
+
+    <!-- Member Detail Drawer (Phải) -->
+    <aside id="member-drawer" class="member-drawer">
+      <button class="drawer-close" id="drawer-close">✕</button>
+      <div class="drawer-content" id="drawer-content"></div>
+    </aside>
+
+    <!-- Memorial Panel (Trái) -->
+    <aside id="memorial-panel" class="memorial-panel">
+      <div class="memorial-header">
+        <h2>🪷 Lịch Giỗ & Sự Kiện</h2>
+        <button class="memorial-close" id="memorial-close">✕</button>
+      </div>
+      <div class="memorial-content" id="memorial-content"></div>
+    </aside>
+
+    <!-- Modal 1: Nguồn Gốc Gia Tộc & Phả Ký -->
+    <div id="family-history-modal" class="custom-modal">
+      <div class="modal-dialog">
+        <div class="modal-header">
+          <h3>📖 Nguồn Gốc Gia Tộc & Phả Ký</h3>
+          <button id="history-modal-close" class="modal-close-btn">✕</button>
+        </div>
+        <div class="modal-body" id="family-history-body"></div>
+      </div>
+    </div>
+
+    <!-- Modal 2: Form Thêm / Sửa Thành Viên -->
+    <div id="member-editor-modal" class="custom-modal">
+      <div class="modal-dialog">
+        <div class="modal-header">
+          <h3>➕ Thêm / Chỉnh Sửa Thành Viên</h3>
+          <button id="editor-modal-close" class="modal-close-btn">✕</button>
+        </div>
+        <form id="member-editor-form" class="modal-body">
+          <input type="hidden" id="field-id">
+          
+          <div class="form-row">
+            <div class="form-group" style="flex:2;">
+              <label>Họ và Tên (*)</label>
+              <input type="text" id="field-full-name" placeholder="Ví dụ: Phạm Văn An" required>
+            </div>
+            <div class="form-group" style="flex:1;">
+              <label>Tên Tự / Hiệu</label>
+              <input type="text" id="field-alias" placeholder="Tự: Phúc An">
+            </div>
+          </div>
+
+          <!-- Ảnh chân dung thực tế -->
+          <div class="form-row" style="align-items: center; background: var(--bg-secondary); padding: 10px; border-radius: 8px; border: 1px solid var(--border-color);">
+            <div class="form-group" style="flex: 1;">
+              <label>🖼️ Ảnh Chân Dung Thực Tế (Tải lên từ máy tính)</label>
+              <input type="file" id="field-avatar-file" accept="image/*" style="padding: 5px;">
+              <input type="hidden" id="field-avatar-url">
+            </div>
+            <div id="avatar-preview-container" style="width: 50px; height: 50px; border-radius: 50%; border: 2px solid var(--gold); overflow: hidden; display: none; margin-left: 10px; flex-shrink: 0;">
+              <img id="avatar-preview-img" src="" alt="Preview" style="width: 100%; height: 100%; object-fit: cover;">
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label>Giới Tính (*)</label>
+              <select id="field-gender">
+                <option value="male">👨 Nam (Đinh)</option>
+                <option value="female">👩 Nữ / Dâu</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>Đời thứ mấy (*)</label>
+              <select id="field-generation">
+                <option value="1">Đời 1 (Khởi Tổ)</option>
+                <option value="2">Đời 2</option>
+                <option value="3">Đời 3</option>
+                <option value="4" selected>Đời 4</option>
+                <option value="5">Đời 5</option>
+                <option value="6">Đời 6</option>
+              </select>
+            </div>
+            <div class="form-group" style="flex:1.5;">
+              <label>Vai Vế / Danh Xưng (Gõ hoặc bấm chọn nhanh)</label>
+              <input type="text" id="field-family-title" list="vai-ve-suggestions" placeholder="VD: Con trưởng, Cháu đích tôn...">
+              <datalist id="vai-ve-suggestions">
+                <option value="Con trưởng">
+                <option value="Con thứ">
+                <option value="Con út">
+                <option value="Đích tôn">
+                <option value="Cháu đích tôn">
+                <option value="Dâu trưởng">
+                <option value="Dâu thứ">
+                <option value="Cháu dâu">
+                <option value="Cháu rể">
+                <option value="Cháu nội">
+                <option value="Cháu ngoại">
+                <option value="Chắt">
+                <option value="Trưởng chi">
+                <option value="Trưởng tộc">
+              </datalist>
+              <div class="vai-ve-chips" style="display:flex; flex-wrap:wrap; gap:4px; margin-top:6px;">
+                <span style="font-size:11px; background:var(--bg-secondary); border:1px solid var(--border-color); padding:2px 6px; border-radius:4px; cursor:pointer;" onclick="document.getElementById('field-family-title').value=this.innerText">Con trưởng</span>
+                <span style="font-size:11px; background:var(--bg-secondary); border:1px solid var(--border-color); padding:2px 6px; border-radius:4px; cursor:pointer;" onclick="document.getElementById('field-family-title').value=this.innerText">Con thứ</span>
+                <span style="font-size:11px; background:var(--bg-secondary); border:1px solid var(--border-color); padding:2px 6px; border-radius:4px; cursor:pointer;" onclick="document.getElementById('field-family-title').value=this.innerText">Đích tôn</span>
+                <span style="font-size:11px; background:var(--bg-secondary); border:1px solid var(--border-color); padding:2px 6px; border-radius:4px; cursor:pointer;" onclick="document.getElementById('field-family-title').value=this.innerText">Dâu trưởng</span>
+                <span style="font-size:11px; background:var(--bg-secondary); border:1px solid var(--border-color); padding:2px 6px; border-radius:4px; cursor:pointer;" onclick="document.getElementById('field-family-title').value=this.innerText">Cháu rể</span>
+                <span style="font-size:11px; background:var(--bg-secondary); border:1px solid var(--border-color); padding:2px 6px; border-radius:4px; cursor:pointer;" onclick="document.getElementById('field-family-title').value=this.innerText">Chắt</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label>Là con của ai (Cha / Mẹ)</label>
+              <select id="field-father-id"></select>
+            </div>
+            <div class="form-group">
+              <label>Vợ / Chồng (Hôn phối)</label>
+              <select id="field-spouse-id"></select>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label>Năm sinh</label>
+              <input type="number" id="field-birth-year" placeholder="1980">
+            </div>
+            <div class="form-group" style="display:flex; align-items:center; gap: 8px; margin-top:20px;">
+              <label style="cursor:pointer; display:flex; align-items:center; gap:6px; font-weight:700; color:#B45309;">
+                <input type="checkbox" id="field-is-deceased" style="width:18px; height:18px;">
+                🪷 Đã mất (Qua đời)
+              </label>
+            </div>
+            <div class="form-group">
+              <label>Năm mất (nếu có)</label>
+              <input type="number" id="field-death-year" placeholder="2020">
+            </div>
+          </div>
+
+          <!-- Nhóm ngày giỗ âm lịch -->
+          <div id="memorial-input-group" style="display:none; background: rgba(212,175,55,0.1); border: 1px solid #D4AF37; border-radius: 8px; padding: 12px; margin-bottom: 12px;">
+            <div style="font-size: 13px; font-weight: 700; color: #B8860B; margin-bottom: 8px;">🏮 Ngày Giỗ Âm Lịch Hằng Năm</div>
+            <div class="form-row">
+              <div class="form-group">
+                <label>Ngày Âm lịch (1 - 30)</label>
+                <input type="number" id="field-lunar-day" min="1" max="30" placeholder="15">
+              </div>
+              <div class="form-group">
+                <label>Tháng Âm lịch (1 - 12)</label>
+                <select id="field-lunar-month">
+                  <option value="1">Tháng Giêng (1)</option>
+                  <option value="2">Tháng Hai (2)</option>
+                  <option value="3">Tháng Ba (3)</option>
+                  <option value="4">Tháng Tư (4)</option>
+                  <option value="5">Tháng Năm (5)</option>
+                  <option value="6">Tháng Sáu (6)</option>
+                  <option value="7">Tháng Bảy (7)</option>
+                  <option value="8">Tháng Tám (8)</option>
+                  <option value="9">Tháng Chín (9)</option>
+                  <option value="10">Tháng Mười (10)</option>
+                  <option value="11">Tháng Mười Một (11)</option>
+                  <option value="12">Tháng Chạp (12)</option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label>Vị trí mộ phần</label>
+            <input type="text" id="field-burial-location" placeholder="VD: Nghĩa trang Làng Đông Ngạc, Từ Liêm">
+          </div>
+
+          <div class="form-group">
+            <label>Google Maps URL (Tọa độ mộ phần)</label>
+            <input type="url" id="field-maps-url" placeholder="https://maps.google.com/?q=...">
+          </div>
+
+          <div class="form-group">
+            <label>Tiểu sử / Ghi chú công đức</label>
+            <textarea id="field-biography" rows="3" placeholder="Tóm tắt cuộc đời, sự nghiệp, công đức..."></textarea>
+          </div>
+
+          <div class="modal-actions">
+            <button type="button" id="btn-download-json" class="btn-secondary">📥 Tải file data.json mới</button>
+            <button type="button" id="btn-save-member" class="btn-primary">💾 Lưu Vào Cây Phả Hệ</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- External Libraries -->
+  <script src="https://d3js.org/d3.v7.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  
+  <!-- App Scripts (order matters!) -->
+  <script src="./js/lunar-calendar.js"></script>
+  <script src="./js/data.js"></script>
+  <script src="./js/theme.js"></script>
+  <script src="./js/dashboard.js"></script>
+  <script src="./js/tree.js"></script>
+  <script src="./js/member-detail.js"></script>
+  <script src="./js/memorial.js"></script>
+  <script src="./js/family-history.js"></script>
+  <script src="./js/member-editor.js"></script>
+  <script src="./js/export.js"></script>
+  <script src="./js/pwa.js"></script>
+  <script src="./js/app.js"></script>
+</body>
+</html>

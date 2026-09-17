@@ -1,0 +1,137 @@
+/* ==========================================================================
+   Traditional Theme - Hoàng gia / Giấy điệp
+   ========================================================================== */
+html[data-theme="traditional"] {
+  --bg-primary: #F5EFEB; /* Warm parchment */
+  --bg-secondary: #EADDCD;
+  --bg-card: #FFFAF0; /* Creamy white */
+  --bg-header: #4A2C2A; /* Dark wood */
+  
+  --text-primary: #3E2723; /* Dark brown text */
+  --text-secondary: #5D4037;
+  --text-accent: #8B0000; /* Deep red accent */
+  
+  --accent: #B8860B; /* Patriarch gold */
+  --accent-hover: #D4AF37; /* Gold hover */
+  --accent-light: #F8E2A1;
+  
+  --border-color: #8D6E63;
+  --border-radius: 4px; /* More angular for traditional feel */
+  
+  --shadow-sm: 0 2px 4px rgba(74, 44, 42, 0.1);
+  --shadow-md: 0 4px 8px rgba(74, 44, 42, 0.15);
+  --shadow-lg: 0 10px 20px rgba(74, 44, 42, 0.2);
+  
+  --font-family: 'Noto Serif', 'Playfair Display', serif;
+  --font-family-heading: 'Playfair Display', serif;
+  
+  --node-bg: #FFFAF0;
+  --node-border: #8D6E63;
+  --node-text: #3E2723;
+}
+
+/* Global texture for traditional theme */
+html[data-theme="traditional"] body {
+  background-image: linear-gradient(rgba(245, 239, 235, 0.95), rgba(245, 239, 235, 0.95)), 
+                    repeating-radial-gradient(circle at 0 0, transparent 0, #F5EFEB 10px),
+                    repeating-linear-gradient(#EADDCD55, #EADDCD55);
+}
+
+html[data-theme="traditional"] #app-header {
+  border-bottom: 3px double var(--accent);
+  box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+}
+
+html[data-theme="traditional"] .app-title {
+  color: var(--gold);
+  text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+  letter-spacing: 1px;
+}
+
+html[data-theme="traditional"] .app-subtitle {
+  color: #EADDCD;
+  font-style: italic;
+}
+
+html[data-theme="traditional"] .kpi-card {
+  border: 2px double var(--border-color);
+  background: var(--bg-card);
+}
+
+/* Decorative corner ornaments */
+html[data-theme="traditional"] .kpi-card::before,
+html[data-theme="traditional"] .kpi-card::after {
+  content: '';
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  border: 1px solid var(--accent);
+  pointer-events: none;
+}
+
+html[data-theme="traditional"] .kpi-card::before {
+  top: 2px;
+  left: 2px;
+  border-right: none;
+  border-bottom: none;
+}
+
+html[data-theme="traditional"] .kpi-card::after {
+  bottom: 2px;
+  right: 2px;
+  border-left: none;
+  border-top: none;
+}
+
+html[data-theme="traditional"] .lineage-toggle {
+  background: rgba(30, 15, 10, 0.6);
+  border: 1.5px solid var(--gold);
+}
+
+html[data-theme="traditional"] .lineage-btn {
+  color: #F8E2A1;
+  font-weight: 600;
+  transition: all 0.2s;
+}
+
+html[data-theme="traditional"] .lineage-btn:hover {
+  color: #FFFFFF;
+}
+
+html[data-theme="traditional"] .lineage-btn.active {
+  background: linear-gradient(135deg, #F5D77F, #D4AF37);
+  color: #361A18; /* Dark wood text */
+  font-weight: 800;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.3);
+}
+html[data-theme="traditional"] .theme-toggle-btn {
+  color: var(--gold);
+  border-color: var(--accent);
+  background: rgba(0,0,0,0.2);
+}
+
+html[data-theme="traditional"] .btn-memorial {
+  background: linear-gradient(135deg, var(--gold), var(--accent));
+  color: #4A2C2A;
+  border: 1px solid #4A2C2A;
+}
+
+html[data-theme="traditional"] #search-input {
+  border: 1px solid var(--border-color);
+  font-family: var(--font-family);
+}
+html[data-theme="traditional"] #search-input:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 5px rgba(212, 175, 55, 0.5);
+}
+
+/* Tree specific traditional styles */
+html[data-theme="traditional"] .node-card {
+  border: 2px solid var(--border-color);
+  box-shadow: var(--shadow-md);
+  border-radius: 0; /* Square corners */
+}
+html[data-theme="traditional"] .node-name {
+  font-family: var(--font-family-heading);
+  color: var(--text-accent);
+}

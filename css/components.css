@@ -1,0 +1,659 @@
+/* ==========================================================================
+   UI Components (Drawer, Panels, Modals)
+   ========================================================================== */
+
+/* Overlay */
+.drawer-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(3px);
+  z-index: 100;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.3s ease;
+}
+
+.drawer-overlay.active,
+.drawer-overlay.show,
+.drawer-overlay.open {
+  opacity: 1;
+  visibility: visible;
+}
+
+/* ==========================================================================
+   Member Drawer (Right side)
+   ========================================================================== */
+.member-drawer {
+  position: fixed;
+  top: 0;
+  right: 0;
+  height: 100%;
+  width: 440px;
+  max-width: 90vw;
+  background-color: var(--bg-card);
+  color: var(--text-primary);
+  box-shadow: -5px 0 30px rgba(0, 0, 0, 0.3);
+  z-index: 110;
+  transform: translateX(100%);
+  transition: transform 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+  display: flex;
+  flex-direction: column;
+}
+
+.member-drawer.active,
+.member-drawer.open {
+  transform: translateX(0);
+}
+
+.drawer-close {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: var(--bg-secondary);
+  color: var(--text-primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2rem;
+  border: 1px solid var(--border-color);
+  z-index: 2;
+}
+
+.drawer-close:hover {
+  background: var(--border-color);
+  color: var(--danger);
+  transform: rotate(90deg);
+}
+
+.drawer-content {
+  flex: 1;
+  overflow-y: auto;
+  padding: 2rem 1.5rem;
+}
+
+.drawer-header {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.drawer-avatar {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 4px solid var(--bg-secondary);
+  box-shadow: var(--shadow-md);
+  margin: 0 auto 1rem;
+}
+
+.drawer-name {
+  font-size: 1.5rem;
+  color: var(--text-primary);
+  margin-bottom: 0.25rem;
+}
+
+.drawer-role {
+  font-size: 0.875rem;
+  color: var(--text-secondary);
+  display: inline-block;
+  padding: 4px 12px;
+  background: var(--bg-secondary);
+  border-radius: 12px;
+}
+
+.info-section {
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: var(--border-radius);
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.info-section h3 {
+  font-size: 1.1rem;
+  margin-bottom: 1rem;
+  color: var(--accent);
+  border-bottom: 1px solid var(--border-color);
+  padding-bottom: 0.5rem;
+}
+
+.info-row {
+  display: flex;
+  margin-bottom: 0.75rem;
+  font-size: 0.95rem;
+}
+
+.info-row:last-child {
+  margin-bottom: 0;
+}
+
+.info-label {
+  width: 120px;
+  color: var(--text-secondary);
+  flex-shrink: 0;
+  font-weight: 500;
+}
+
+.info-value {
+  color: var(--text-primary);
+  flex: 1;
+}
+
+.lunar-date {
+  color: var(--accent);
+  font-size: 0.85rem;
+  background: var(--accent-light);
+  padding: 2px 6px;
+  border-radius: 4px;
+  margin-left: 8px;
+}
+
+.maps-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--text-accent);
+  font-size: 0.85rem;
+  margin-top: 4px;
+}
+
+.maps-link:hover {
+  text-decoration: underline;
+}
+
+/* ==========================================================================
+   Memorial Panel (Left side)
+   ========================================================================== */
+.memorial-panel {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 400px;
+  max-width: 90vw;
+  background-color: var(--bg-card);
+  color: var(--text-primary);
+  box-shadow: 5px 0 30px rgba(0, 0, 0, 0.3);
+  z-index: 110;
+  transform: translateX(-100%);
+  transition: transform 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+  display: flex;
+  flex-direction: column;
+}
+
+.memorial-panel.active,
+.memorial-panel.open {
+  transform: translateX(0);
+}
+
+.memorial-header {
+  padding: 1.5rem;
+  border-bottom: 1px solid var(--border-color);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: var(--bg-header);
+}
+
+.memorial-header h2 {
+  font-size: 1.25rem;
+  color: var(--text-primary);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0;
+}
+
+.memorial-close {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-primary);
+}
+
+.memorial-close:hover {
+  background: var(--border-color);
+  color: var(--danger);
+}
+
+.memorial-content {
+  flex: 1;
+  overflow-y: auto;
+  padding: 1.5rem;
+}
+
+.memorial-countdown {
+  background: linear-gradient(135deg, var(--bg-secondary), var(--bg-card));
+  border: 1px solid var(--accent);
+  border-radius: var(--border-radius);
+  padding: 1.5rem;
+  text-align: center;
+  margin-bottom: 2rem;
+  box-shadow: var(--shadow-sm);
+}
+
+.countdown-title {
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 0.5rem;
+}
+
+.countdown-name {
+  font-size: 1.25rem;
+  font-weight: bold;
+  color: var(--text-primary);
+  margin-bottom: 1rem;
+}
+
+.countdown-days {
+  font-size: 2.5rem;
+  font-weight: 800;
+  color: var(--danger);
+  line-height: 1;
+  margin-bottom: 0.5rem;
+}
+
+.countdown-days span {
+  font-size: 1rem;
+  font-weight: normal;
+  color: var(--text-secondary);
+}
+
+.memorial-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.memorial-item {
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: var(--border-radius);
+  padding: 1rem;
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  transition: transform 0.2s;
+}
+
+.memorial-item:hover {
+  transform: translateX(4px);
+  border-color: var(--accent);
+}
+
+.memorial-date {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-width: 60px;
+  padding: 8px;
+  background: var(--bg-secondary);
+  border-radius: 8px;
+  text-align: center;
+}
+
+.memorial-date .lunar-day {
+  font-size: 1.25rem;
+  font-weight: bold;
+  color: var(--accent);
+  line-height: 1;
+}
+
+.memorial-date .lunar-month {
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+  margin-top: 4px;
+}
+
+.memorial-info {
+  flex: 1;
+}
+
+.memorial-info h4 {
+  margin: 0 0 4px 0;
+  color: var(--text-primary);
+  font-size: 1rem;
+}
+
+.memorial-info p {
+  margin: 0;
+  color: var(--text-secondary);
+  font-size: 0.85rem;
+}
+
+.countdown-badge {
+  font-size: 0.75rem;
+  padding: 4px 8px;
+  border-radius: 12px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.countdown-badge.urgent {
+  background: rgba(239, 68, 68, 0.1);
+  color: var(--danger);
+}
+
+.countdown-badge.soon {
+  background: rgba(245, 158, 11, 0.1);
+  color: #f59e0b;
+}
+
+.countdown-badge.normal {
+  background: var(--bg-secondary);
+  color: var(--text-secondary);
+}
+
+/* ==========================================================================
+   Search Results
+   ========================================================================== */
+.search-result-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 16px;
+  cursor: pointer;
+  border-bottom: 1px solid var(--border-color);
+  transition: background 0.2s;
+}
+
+.search-result-item:last-child {
+  border-bottom: none;
+}
+
+.search-result-item:hover {
+  background: var(--bg-secondary);
+}
+
+.search-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.search-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.search-name {
+  font-weight: 600;
+  color: var(--text-primary);
+  font-size: 0.95rem;
+}
+
+.search-desc {
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+}
+
+/* ==========================================================================
+   Responsive Adjustments for Panels
+   ========================================================================== */
+@media (max-width: 767px) {
+  /* Mobile: Drawer becomes Bottom Sheet */
+  .member-drawer {
+    width: 100%;
+    height: 85vh;
+    top: auto;
+    bottom: 0;
+    border-radius: 20px 20px 0 0;
+    transform: translateY(100%);
+  }
+  
+  .member-drawer.active,
+  .member-drawer.open {
+    transform: translateY(0);
+  }
+  
+  /* Mobile: Memorial Panel slides from bottom */
+  .memorial-panel {
+    width: 100%;
+    height: 90vh;
+    top: auto;
+    bottom: 0;
+    border-radius: 20px 20px 0 0;
+    transform: translateY(100%);
+  }
+  
+  .memorial-panel.active,
+  .memorial-panel.open {
+    transform: translateY(0);
+  }
+}
+
+/* ==========================================================================
+   Header History Button & Add Member Button
+   ========================================================================== */
+.btn-history-header {
+  padding: 6px 14px;
+  border-radius: 20px;
+  background: linear-gradient(135deg, rgba(212,175,55,0.25), rgba(184,134,11,0.15));
+  border: 1.5px solid var(--gold, #D4AF37);
+  color: var(--gold, #D4AF37);
+  font-weight: 700;
+  font-size: 0.85rem;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.btn-history-header:hover {
+  background: var(--gold, #D4AF37);
+  color: #361A18;
+  transform: translateY(-1px);
+}
+
+.btn-add-member {
+  padding: 7px 14px;
+  border-radius: 6px;
+  background: linear-gradient(135deg, #10B981, #059669);
+  color: #FFFFFF;
+  border: none;
+  font-weight: 700;
+  font-size: 0.85rem;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+  box-shadow: 0 2px 6px rgba(16,185,129,0.3);
+  transition: all 0.2s;
+}
+
+.btn-add-member:hover {
+  background: linear-gradient(135deg, #059669, #047857);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 10px rgba(16,185,129,0.4);
+}
+
+/* ==========================================================================
+   Custom Modals (Phả Ký & Thêm Thành Viên)
+   ========================================================================== */
+.custom-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 120;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  box-sizing: border-box;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.3s ease;
+  pointer-events: none;
+}
+
+.custom-modal.active,
+.custom-modal.open {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+}
+
+.modal-dialog {
+  background: var(--bg-card, #FFFDF9);
+  border: 2px solid var(--gold, #D4AF37);
+  border-radius: 12px;
+  width: 100%;
+  max-width: 680px;
+  max-height: 90vh;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 20px 40px rgba(0,0,0,0.35);
+  transform: scale(0.95);
+  transition: transform 0.3s ease;
+}
+
+.custom-modal.active .modal-dialog,
+.custom-modal.open .modal-dialog {
+  transform: scale(1);
+}
+
+.modal-header {
+  padding: 16px 20px;
+  background: var(--bg-header, #4A2C2A);
+  color: var(--gold, #D4AF37);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 2px solid var(--gold, #D4AF37);
+  border-radius: 10px 10px 0 0;
+}
+
+.modal-header h3 {
+  margin: 0;
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--gold, #D4AF37);
+}
+
+.modal-close-btn {
+  background: rgba(255,255,255,0.1);
+  border: 1px solid rgba(255,255,255,0.2);
+  color: #FFF;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1rem;
+}
+
+.modal-close-btn:hover {
+  background: #EF4444;
+  border-color: #EF4444;
+}
+
+.modal-body {
+  padding: 20px;
+  overflow-y: auto;
+  flex: 1;
+}
+
+/* Form Styles */
+.form-row {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 12px;
+  flex-wrap: wrap;
+}
+
+.form-group {
+  flex: 1;
+  min-width: 160px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.form-group label {
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--text-secondary, #6B7280);
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+  padding: 9px 12px;
+  border-radius: 6px;
+  border: 1px solid var(--border-color, #D1D5DB);
+  background: var(--bg-secondary, #F9FAFB);
+  color: var(--text-primary, #111827);
+  font-size: 0.9rem;
+  font-family: inherit;
+  box-sizing: border-box;
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+  outline: none;
+  border-color: var(--accent, #B8860B);
+  box-shadow: 0 0 0 2px rgba(212,175,55,0.25);
+}
+
+.modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  margin-top: 20px;
+  padding-top: 14px;
+  border-top: 1px solid var(--border-color, #E5E7EB);
+}
+
+.btn-primary {
+  padding: 9px 18px;
+  border-radius: 6px;
+  background: linear-gradient(135deg, #D4AF37, #B8860B);
+  color: #361A18;
+  border: none;
+  font-weight: 800;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.btn-primary:hover {
+  background: linear-gradient(135deg, #F5D77F, #D4AF37);
+  transform: translateY(-1px);
+}
+
+.btn-secondary {
+  padding: 9px 16px;
+  border-radius: 6px;
+  background: var(--bg-secondary, #F3F4F6);
+  color: var(--text-primary, #374151);
+  border: 1px solid var(--border-color, #D1D5DB);
+  font-weight: 600;
+  font-size: 0.85rem;
+  cursor: pointer;
+}
+
+.btn-secondary:hover {
+  background: var(--border-color, #E5E7EB);
+}
