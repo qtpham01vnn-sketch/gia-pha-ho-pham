@@ -530,10 +530,11 @@ window.GiaPha.treeModule = (function () {
     const parent = svg.node().parentElement;
     if (!parent) return;
     const fw = parent.clientWidth;
-    const scale = fw < 768 ? 0.75 : 0.9;
+    const isMobile = fw < 768;
+    const scale = isMobile ? 0.72 : 0.9;
     const rootMid = rootNode.x + COUPLE_MID_X;
     const tx = fw / 2 - scale * rootMid;
-    const ty = 70;
+    const ty = isMobile ? 45 : 70;
     const t = d3.zoomIdentity.translate(tx, ty).scale(scale);
     svg.transition().duration(800).call(zoomBehavior.transform, t);
   }
@@ -546,16 +547,17 @@ window.GiaPha.treeModule = (function () {
     const fw = parent.clientWidth, fh = parent.clientHeight;
     if (box.width === 0 || box.height === 0) return;
 
-    const pad = 50;
+    const isMobile = fw < 768;
+    const pad = isMobile ? 20 : 50;
     const calcScale = Math.min(
       (fw - pad * 2) / box.width,
       (fh - pad * 2) / box.height
     );
 
-    const scale = Math.max(0.55, Math.min(calcScale, 1.0));
+    const scale = isMobile ? Math.max(0.48, Math.min(calcScale, 0.85)) : Math.max(0.45, Math.min(calcScale, 1.0));
     const midX = box.x + box.width / 2;
     const tx = fw / 2 - scale * midX;
-    const ty = 60;
+    const ty = isMobile ? 40 : 60;
     const t = d3.zoomIdentity.translate(tx, ty).scale(scale);
     svg.transition().duration(750).call(zoomBehavior.transform, t);
   }
